@@ -1,0 +1,12 @@
+FROM nginx:1.15.9
+#FROM nginx:1.15.9
+
+RUN apt-get update -y && \
+    apt-get install -y apt-utils && \
+    apt-get install -y curl && \
+    apt-get install -y nano && \
+    apt-get install -y unzip && \
+    apt-get install -y git 
+
+WORKDIR /var/www/http
+#CMD ["service", "apache2", "start"]

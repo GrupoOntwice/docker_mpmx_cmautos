@@ -1,0 +1,10 @@
+FROM mysql:5.6
+
+# Add a database
+ENV MYSQL_DATABASE mapfre_cotizador_full
+
+# Add the content of the sql-scripts/ directory to your image
+# All scripts in docker-entrypoint-initdb.d/ are automatically
+# executed during container startup
+COPY ./database_script/mcf.sql /docker-entrypoint-initdb.d/
+COPY ./database_script/telefonos_blacklist.sql /docker-entrypoint-initdb.d/

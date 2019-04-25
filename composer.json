@@ -1,0 +1,8 @@
+{
+    "require": {
+        "mailgun/mailgun-php": "^2.8",
+        "guzzlehttp/guzzle": "^6.3",
+        "phpoffice/phpspreadsheet": "^1.6",
+        "maatwebsite/excel": "^3.1"
+    }
+}

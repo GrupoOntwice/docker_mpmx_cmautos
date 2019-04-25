@@ -1,0 +1,39 @@
+version: '2'
+services:
+    app:
+        image: nginx:1.15.9-alpine
+        hostname: "${PROJECT_NAME}_app"
+        container_name: "${PROJECT_NAME}_app"
+        restart: always
+        volumes:
+            - ./:/var/www/html
+            - ./vhost.conf:/etc/nginx/conf.d/default.conf
+            - ./certificados_ssl/localhost.crt:/etc/ssl/localhost.crt
+            - ./certificados_ssl/localhost.key:/etc/ssl/localhost.key
+        ports:
+            - "${PORT}:80"
+            - "${PORT_SSL}:443"
+        links:
+            - php
+        tty: true
+
+    php:
+        build:
+            context: ./
+            dockerfile: php.docker
+        hostname: "${PROJECT_NAME}_php"
+        container_name: "${PROJECT_NAME}_php"
+        restart: always
+        environment:
+            - REDIS_URL=redis://cache
+        volumes:
+            - ./:/var/www/html
+        links:
+            - redis
+
+    redis:
+      image: redis
+      container_name: "${PROJECT_NAME}_redis"
+      command: redis-server --requirepass root
+      expose:
+        - 6379
